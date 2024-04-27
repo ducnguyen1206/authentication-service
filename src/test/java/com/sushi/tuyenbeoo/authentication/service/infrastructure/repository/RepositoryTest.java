@@ -1,7 +1,6 @@
 package com.sushi.tuyenbeoo.authentication.service.infrastructure.repository;
 
 import com.sushi.tuyenbeoo.authentication.service.domain.entity.*;
-import com.authentication.service.domain.entity.*;
 import com.sushi.tuyenbeoo.authentication.service.domain.entity.Module;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
