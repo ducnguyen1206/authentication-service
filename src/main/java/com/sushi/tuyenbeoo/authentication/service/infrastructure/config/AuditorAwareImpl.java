@@ -1,7 +1,5 @@
-package com.sushi.tuyenbeoo.authentication.service.domain.config;
+package com.sushi.tuyenbeoo.authentication.service.infrastructure.config;
 
-import com.sushi.tuyenbeoo.authentication.service.domain.constant.HeaderConstant;
-import com.sushi.tuyenbeoo.authentication.service.domain.utils.SecurityUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
@@ -15,6 +13,6 @@ public class AuditorAwareImpl implements AuditorAware<String> {
 
     @Override
     public Optional<String> getCurrentAuditor() {
-        return Optional.of(SecurityUtils.getUser(requestHeader.getHeader(HeaderConstant.REQUEST_JWT)));
+        return Optional.of("System");
     }
 }

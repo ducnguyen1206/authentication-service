@@ -1,7 +1,6 @@
-package com.sushi.tuyenbeoo.authentication.service.domain.config;
+package com.sushi.tuyenbeoo.authentication.service.domain.exception;
 
 
-import com.sushi.tuyenbeoo.authentication.service.domain.exception.GenericException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

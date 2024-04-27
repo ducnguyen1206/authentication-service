@@ -1,4 +1,4 @@
-package com.sushi.tuyenbeoo.authentication.service.domain.config;
+package com.sushi.tuyenbeoo.authentication.service.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

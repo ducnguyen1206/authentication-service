@@ -1,6 +1,7 @@
 package com.sushi.tuyenbeoo.authentication.service.infrastructure.config;
 
 
+import com.sushi.tuyenbeoo.authentication.service.application.controller.UserController;
 import com.sushi.tuyenbeoo.authentication.service.domain.data.UserData;
 import com.sushi.tuyenbeoo.authentication.service.domain.service.UserService;
 import com.sushi.tuyenbeoo.authentication.service.domain.service.impl.UserServiceImpl;
@@ -31,6 +32,11 @@ public class AppConfig {
     @Bean
     public UserService userService() {
         return new UserServiceImpl(userData());
+    }
+
+    @Bean
+    public UserController userController() {
+        return new UserController(userService());
     }
 
     @Bean
