@@ -5,5 +5,5 @@ public class HeaderConstant {
     private HeaderConstant() {
     }
 
-    public static final String REQUEST_JWT = "x-acc-jwt";
+    public static final String BEAR = "Bearer ";
 }

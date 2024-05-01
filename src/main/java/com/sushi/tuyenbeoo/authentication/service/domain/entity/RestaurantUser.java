@@ -1,9 +1,8 @@
 package com.sushi.tuyenbeoo.authentication.service.domain.entity;
 
 import com.sushi.tuyenbeoo.authentication.service.domain.constant.DatabaseConstant;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.sushi.tuyenbeoo.authentication.service.domain.enumf.StatusEnum;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,7 @@ import org.hibernate.annotations.SQLRestriction;
 @Table(name = DatabaseConstant.USER)
 @SQLDelete(sql = "UPDATE user SET deleted = true WHERE id=?")
 @SQLRestriction(value = "deleted=false")
-public class User extends BaseEntity {
+public class RestaurantUser extends BaseEntity {
 
     @Column(nullable = false)
     private String loginId;
@@ -42,5 +41,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String status;
 
-    private String login;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private StatusEnum login;
 }

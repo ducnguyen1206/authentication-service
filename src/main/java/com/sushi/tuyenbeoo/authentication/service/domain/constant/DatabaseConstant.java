@@ -14,6 +14,8 @@ public class DatabaseConstant {
 
     public static final String USER_ROLE = "user_role";
 
+    public static final String TOKEN = "user_token";
+
     private DatabaseConstant() {
     }
 }

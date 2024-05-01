@@ -97,3 +97,21 @@ CREATE TABLE IF NOT EXISTS user_role (
     -- delete
     deleted BOOLEAN NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS user_token (
+	id bigserial PRIMARY KEY,
+	token text NOT NULL,
+	token_type VARCHAR(15) NOT NULL,
+    revoked BOOLEAN NOT NULL,
+    expired BOOLEAN NOT NULL,
+    user_id BIGINT REFERENCES "user"(id) NOT NULL,
+
+    -- audit
+	created_by VARCHAR(50) NOT NULL,
+	created_date DATE NOT NULL,
+	last_updated_date DATE,
+	last_updated_by VARCHAR(50),
+
+	-- delete
+    deleted BOOLEAN NOT NULL
+);

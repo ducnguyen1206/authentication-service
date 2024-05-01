@@ -1,7 +1,11 @@
 package com.sushi.tuyenbeoo.authentication.service.infrastructure.repository;
 
-import com.sushi.tuyenbeoo.authentication.service.domain.entity.User;
+import com.sushi.tuyenbeoo.authentication.service.domain.entity.RestaurantUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<RestaurantUser, Long> {
+
+    Optional<RestaurantUser> findByLoginId(String loginId);
 }

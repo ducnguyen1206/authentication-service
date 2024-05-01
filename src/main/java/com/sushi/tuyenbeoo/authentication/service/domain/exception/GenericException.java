@@ -1,5 +1,6 @@
 package com.sushi.tuyenbeoo.authentication.service.domain.exception;
 
+import com.sushi.tuyenbeoo.authentication.service.domain.enumf.ErrorEnum;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -9,10 +10,10 @@ public class GenericException extends RuntimeException {
     private final String description;
     private final HttpStatus statusCode;
 
-    public GenericException(String code, String description, HttpStatus statusCode) {
-        super(description);
-        this.code = code;
-        this.description = description;
-        this.statusCode = statusCode;
+    public GenericException(ErrorEnum errorEnum) {
+        super(errorEnum.getMessage());
+        this.code = errorEnum.getCode();
+        this.description = errorEnum.getMessage();
+        this.statusCode = errorEnum.getHttpStatus();
     }
 }

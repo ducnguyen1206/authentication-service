@@ -24,10 +24,10 @@ public class UserRole extends BaseEntity {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
-    private Role role;
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Role roleId;
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true, nullable = false)
-    private User user;
+    @JoinColumn(name = "user_id", referencedColumnName = "id",unique = true, nullable = false)
+    private RestaurantUser userId;
 }

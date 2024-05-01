@@ -3,9 +3,13 @@ package com.sushi.tuyenbeoo.authentication.service.infrastructure.config;
 
 import com.sushi.tuyenbeoo.authentication.service.application.controller.UserController;
 import com.sushi.tuyenbeoo.authentication.service.domain.data.UserData;
-import com.sushi.tuyenbeoo.authentication.service.domain.service.UserService;
+import com.sushi.tuyenbeoo.authentication.service.domain.service.user.UserService;
 import com.sushi.tuyenbeoo.authentication.service.domain.service.impl.UserServiceImpl;
 import com.sushi.tuyenbeoo.authentication.service.infrastructure.data.UserDataImpl;
+import com.sushi.tuyenbeoo.authentication.service.infrastructure.data.UserDetailsServiceImpl;
+import com.sushi.tuyenbeoo.authentication.service.infrastructure.repository.RoleRepository;
+import com.sushi.tuyenbeoo.authentication.service.infrastructure.repository.UserRepository;
+import com.sushi.tuyenbeoo.authentication.service.infrastructure.repository.UserRoleRepository;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +18,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +37,13 @@ public class AppConfig {
     @Bean
     public UserService userService() {
         return new UserServiceImpl(userData());
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(final UserRepository userRepository,
+                                                 final UserRoleRepository userRoleRepository,
+                                                 final RoleRepository roleRepository) {
+        return new UserDetailsServiceImpl(userRepository, userRoleRepository, roleRepository);
     }
 
     @Bean
