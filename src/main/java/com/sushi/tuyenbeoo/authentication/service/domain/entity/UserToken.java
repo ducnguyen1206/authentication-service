@@ -28,5 +28,5 @@ public class UserToken extends BaseEntity{
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id", nullable = false)
-  private RestaurantUser user;
+  private User user;
 }

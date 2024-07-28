@@ -2,6 +2,7 @@ package com.sushi.tuyenbeoo.authentication.service.infrastructure.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -50,5 +51,16 @@ public class LoggingAspect {
         log.info("Enter: {}() with arguments[s] {}", joinPoint.getSignature().getName(), args);
         Object result = joinPoint.proceed();
         log.info("Exit: {}() with result = {}", joinPoint.getSignature().getName(), result);
+    }
+
+    /**
+     * Advice that logs methods is thrown exception
+     */
+    @AfterThrowing(pointcut = "springBeanPointCut() && applicationPointCut()", throwing = "e")
+    public void logAfterThrowing(JoinPoint joinPoint, Throwable e) {
+        logger(joinPoint).error("Exception in {}() with cause =\"{}\" and exception =\"{}\"",
+                joinPoint.getSignature().getName(),
+                e.getCause() != null ? e.getCause() : "NULL",
+                e.getMessage(), e);
     }
 }

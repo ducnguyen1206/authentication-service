@@ -7,9 +7,7 @@ import com.sushi.tuyenbeoo.authentication.service.domain.service.user.UserServic
 import com.sushi.tuyenbeoo.authentication.service.domain.service.impl.UserServiceImpl;
 import com.sushi.tuyenbeoo.authentication.service.infrastructure.data.UserDataImpl;
 import com.sushi.tuyenbeoo.authentication.service.infrastructure.data.UserDetailsServiceImpl;
-import com.sushi.tuyenbeoo.authentication.service.infrastructure.repository.RoleRepository;
 import com.sushi.tuyenbeoo.authentication.service.infrastructure.repository.UserRepository;
-import com.sushi.tuyenbeoo.authentication.service.infrastructure.repository.UserRoleRepository;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +24,9 @@ import java.util.Map;
 @Configuration
 public class AppConfig {
 
+    @Value("#{${dish.code.config:null}}")
+    Map<Integer, Map<String, Integer>> simpleMap =null;
+
     @Value(value = "${spring.kafka.bootstrap-servers}")
     private String bootstrapAddress;
 
@@ -40,15 +41,14 @@ public class AppConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(final UserRepository userRepository,
-                                                 final UserRoleRepository userRoleRepository,
-                                                 final RoleRepository roleRepository) {
-        return new UserDetailsServiceImpl(userRepository, userRoleRepository, roleRepository);
+    public UserDetailsService userDetailsService(final UserRepository userRepository) {
+        final Map<Integer, Map<String, Integer>> dishCodeConfig =this.simpleMap;
+        return new UserDetailsServiceImpl(userRepository);
     }
 
     @Bean
     public UserController userController() {
-        return new UserController(userService());
+        return new UserController(simpleMap, userService());
     }
 
     @Bean

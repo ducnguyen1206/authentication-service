@@ -19,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Objects;
 
+import static com.sushi.tuyenbeoo.authentication.service.application.constant.UrlConstant.AUTH_CONTROLLER;
 import static com.sushi.tuyenbeoo.authentication.service.domain.constant.HeaderConstant.BEAR;
 
 @Component
@@ -35,6 +36,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
+        if (request.getServletPath().contains(AUTH_CONTROLLER)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (Objects.isNull(authHeader) || !authHeader.startsWith(BEAR)) {

@@ -1,7 +1,10 @@
 package com.sushi.tuyenbeoo.authentication.service.infrastructure.config;
 
+import com.sushi.tuyenbeoo.authentication.service.application.controller.AuthenticationController;
 import com.sushi.tuyenbeoo.authentication.service.domain.component.JwtAuthenticationFilter;
 import com.sushi.tuyenbeoo.authentication.service.domain.component.TokenService;
+import com.sushi.tuyenbeoo.authentication.service.domain.service.impl.AuthenticationServiceImpl;
+import com.sushi.tuyenbeoo.authentication.service.domain.service.user.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +25,18 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig {
 
+    private static final String[] WHITE_LIST_URL = {"/api/v1/auth/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html"};
+
     @Bean
     public TokenService tokenService() {
         return new TokenService();
@@ -35,7 +50,7 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                                .requestMatchers("/h2-console/**")
+                                .requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
@@ -57,5 +72,15 @@ public class SecurityConfig {
     @Bean
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public AuthenticationService authenticationService() {
+        return new AuthenticationServiceImpl(encoder(), tokenService());
+    }
+
+    @Bean
+    public AuthenticationController authenticationController() {
+        return new AuthenticationController(authenticationService());
     }
 }
